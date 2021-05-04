@@ -5,12 +5,12 @@
 <?php
     $dbhost = "localhost";
     $dbuser = "root";
-    $dbpwd = "root";
-    $dbname = "Company";
+    $dbpwd = "MySQLServer";
+    $dbname = "Vaccination";
 
     // Step 1: connect to DB
     $conn = new mysqli($dbhost,$dbuser,$dbpwd,$dbname);
-    if($conn->connect_error) 
+    if($conn->connect_error)
     {
         echo "Error: could not connect to the DB";
         exit;

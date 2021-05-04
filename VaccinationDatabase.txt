@@ -2,35 +2,28 @@ CREATE TABLE `nurse` (
   `FName` varchar(50) NOT NULL,
   `MI` varchar(1) NOT NULL,
   `LName` varchar(50) NOT NULL,
-  `EmployeeID` int NOT NULL,
+  `EmployeeID` int NOT NULL AUTO_INCREMENT,
   `Age` int NOT NULL,
-  `Gender` tinyint(1) NOT NULL,
+  `Gender` tinyint(1) DEFAULT NULL,
   `Phone` varchar(11) NOT NULL,
   `Address` varchar(50) NOT NULL,
   PRIMARY KEY (`EmployeeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `patient` (
   `FName` varchar(50) NOT NULL,
   `MI` varchar(1) NOT NULL,
   `LName` varchar(50) NOT NULL,
-  `SSN` varchar(9) NOT NULL,
+  `SSN` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Age` int NOT NULL,
-  `Gender` tinyint(1) NOT NULL,
+  `Gender` tinyint(1) DEFAULT NULL,
   `Race` varchar(20) NOT NULL,
   `Occupation` varchar(50) NOT NULL,
   `History` varchar(50) NOT NULL,
   `Phone` varchar(11) NOT NULL,
   `Address` varchar(50) NOT NULL,
   PRIMARY KEY (`SSN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `timeslot` (
-  `Start` date NOT NULL,
-  `Date` date NOT NULL,
-  `TimeID` int NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`TimeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `vaccine` (
   `Name` varchar(50) NOT NULL,
@@ -41,17 +34,11 @@ CREATE TABLE `vaccine` (
   PRIMARY KEY (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `scheduledvaccine` (
-  `SSN` varchar(9) NOT NULL,
-  `TimeID` int NOT NULL,
-  `Dose` enum('1','2') NOT NULL,
-  `Name` varchar(50) NOT NULL,
-  PRIMARY KEY (`Name`,`SSN`,`TimeID`) USING BTREE,
-  KEY `fk_TimeID` (`TimeID`),
-  KEY `fk_SSN` (`SSN`),
-  CONSTRAINT `fk_name` FOREIGN KEY (`Name`) REFERENCES `vaccine` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_SSN` FOREIGN KEY (`SSN`) REFERENCES `patient` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_TimeID` FOREIGN KEY (`TimeID`) REFERENCES `timeslot` (`TimeID`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `timeslot` (
+  `Start` date NOT NULL,
+  `Date` date NOT NULL,
+  `TimeID` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`TimeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `scheduledwork` (
@@ -61,4 +48,17 @@ CREATE TABLE `scheduledwork` (
   KEY `fk_TimeWork` (`TimeID`),
   CONSTRAINT `fk_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `nurse` (`EmployeeID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_TimeWork` FOREIGN KEY (`TimeID`) REFERENCES `timeslot` (`TimeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `scheduledvaccine` (
+  `SSN` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `TimeID` int NOT NULL,
+  `Dose` enum('1','2') NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`Name`,`SSN`,`TimeID`) USING BTREE,
+  KEY `fk_TimeID` (`TimeID`),
+  KEY `fk_SSN` (`SSN`),
+  CONSTRAINT `fk_name` FOREIGN KEY (`Name`) REFERENCES `vaccine` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_SSN` FOREIGN KEY (`SSN`) REFERENCES `patient` (`SSN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_TimeID` FOREIGN KEY (`TimeID`) REFERENCES `timeslot` (`TimeID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

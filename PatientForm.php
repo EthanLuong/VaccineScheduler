@@ -5,9 +5,9 @@
 <?php
     $dbhost = "localhost";
     $dbuser = "root";
-    $dbpwd = "root";
-    $dbname = "Patient"
-    
+    $dbpwd = "MySQLServer";
+    $dbname = "Vaccination";
+
     $conn = new mysqli($dbhost, $dbuser, $dbpwd, $dbname);
     if($conn->connect_error)
     {
@@ -21,6 +21,7 @@
     First Name: <input type="text" name="fname">
     MI: <input type="text" name="mi">
     Last Name: <input type="text" name="lname"> <br>
+    Age: <input type="text" name="age"> <br>
     Phone Number: <input type="text" name="phone"> <br>
     Gender:
         <select name="sex">
@@ -46,17 +47,24 @@
 <?php
     if($_POST["fname"])
     {
-        $myQ="INSERT INTO PATIENT(SSN,FNAME,MI,LNAME,PHONE,SEX,RACE,OCCUPATION,ADDRESS,HISTORY) VALUES('";
+        $myQ="INSERT INTO PATIENT(SSN,FNAME,MI,LNAME,AGE,PHONE,GENDER,RACE,OCCUPATION,ADDRESS,HISTORY) VALUES('";
         $myQ .= $_POST["ssn"]."','";
         $myQ .= $_POST["fname"]."','";
         $myQ .= $_POST["mi"]."','";
         $myQ .= $_POST["lname"]."','";
-        $myQ .= $_POST["phone"]."','";
-        $myQ .= $_POST["sex"]."','";
+        $myQ .= $_POST["age"]."','";
+        $myQ .= $_POST["phone"]."',";
+        if($_POST["sex"] == "M"){
+        $myQ .= "1"."','";
+        } elseif ($_POST["sex"] == "F"){
+        $myQ .= "0"."','";
+        } else{
+        $myQ .= "NULL".",'";
+        }
         $myQ .= $_POST["race"]."','";
         $myQ .= $_POST["occupation"]."','";
-        $myQ .= $_POST["address"]."',";
-        $myQ .= $_POST["history"]."'";
+        $myQ .= $_POST["address"]."','";
+        $myQ .= $_POST["history"]."')";
         echo "Query to execute: " . $myQ . "<br>";
         if($conn->query($myQ)) echo "The new patient added successfully!";
         else echo "Error: " . $conn->error;
