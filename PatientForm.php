@@ -45,7 +45,7 @@
 </form>
 
 <?php
-    if($_POST["fname"])
+    if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $myQ="INSERT INTO PATIENT(SSN,FNAME,MI,LNAME,AGE,PHONE,GENDER,RACE,OCCUPATION,ADDRESS,HISTORY) VALUES('";
         $myQ .= $_POST["ssn"]."','";
@@ -55,9 +55,9 @@
         $myQ .= $_POST["age"]."','";
         $myQ .= $_POST["phone"]."',";
         if($_POST["sex"] == "M"){
-        $myQ .= "1"."','";
+        $myQ .= "1".",'";
         } elseif ($_POST["sex"] == "F"){
-        $myQ .= "0"."','";
+        $myQ .= "0".",'";
         } else{
         $myQ .= "NULL".",'";
         }
