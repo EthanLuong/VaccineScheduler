@@ -1,6 +1,10 @@
 <?php
 // Include config file
-
+session_start();
+if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
+    header("location: login.php");
+    exit;
+}
     $dbhost = "localhost";
     $dbuser = "root";
     $dbpwd = "MySQLServer";
@@ -23,19 +27,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
     } else{
-        $sql = "SELECT id FROM users WHERE username = ";
-        $sql .= "'".trim($_POST["username"])."'";
-        echo $sql;
-        $result = $conn->query($sql);
-        if($result){
-          if($result->num_rows > 0){
-            $username_err = "This username is already taken.";
-          } else{
-            $username = trim($_POST["username"]);
-          }
+      $sql = "SELECT username FROM nurse WHERE username = ";
+      $sql .= "'".trim($_POST["username"])."'";
+      $sql .= " UNION SELECT username FROM admin WHERE username = ";
+      $sql .= "'".trim($_POST["username"])."'";
+      $sql .= " UNION SELECT username FROM patient WHERE username = ";
+      $sql .= "'".trim($_POST["username"])."'";
+
+      echo $sql;
+      $result = $conn->query($sql);
+      if($result){
+        if($result->num_rows > 0){
+          $username_err = "This username is already taken.";
         } else{
-          $username_err = "Oops! Something went wrong!";
+          $username = trim($_POST["username"]);
         }
+      } else{
+        $username_err = "Oops! Something went wrong!";
+      }
 
     }
 
@@ -53,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err)){
 
-        $sql = "INSERT INTO users (username, password) VALUES ";
+        $sql = "INSERT INTO admin (username, password) VALUES ";
         $sql .= "('".$username;
 
         $password = password_hash($password, PASSWORD_DEFAULT);
