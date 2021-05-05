@@ -15,8 +15,17 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
-    exit;
+    switch($_SESSION["access"]){
+      case 3:
+      header("location: admin.php");
+      break;
+      case 2:
+      header("location: nurse.php");
+      break;
+      case 1:
+      header("location: patient.php");
+      break;
+    }
 }
 
 

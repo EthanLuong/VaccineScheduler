@@ -17,6 +17,19 @@ if($conn->connect_error)
     exit;
 }
 $nurseInfo = "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  $myQ = "UPDATE NURSE SET ";
+  if(isset($_POST['phone']) && $_POST['phone'] != ""){
+    $myQ .= " PHONE = '".$_POST['phone']."'";
+  }
+  if(isset($_POST['address']) && $_POST['address'] != ""){
+    $myQ .= " ADDRESS = '".$_POST['address']."'";
+  }
+  $myQ .= " WHERE username = '".$_SESSION['username']."'";
+  echo $myQ;
+  $conn->query($myQ);
+}
 $myQ = "SELECT * FROM NURSE WHERE username = ";
 $myQ .= "'".$_SESSION['username']."'";
 echo $_SESSION["access"];
@@ -47,8 +60,6 @@ if($result){
 else{
   $nurseInfo = "error";
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +74,14 @@ else{
     Info
   </h2>
   <?php echo $nurseInfo ?>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <h2>Update Your Info</h2>
+    <br>
+      Phone Number: <input type="text" name="phone"> <br>
+      Address: <input type="text" name="address"> <br>
+      <input type="submit" name="submit" value="Update">
+      <br>
+    </form>
 </body>
 
 </html>
