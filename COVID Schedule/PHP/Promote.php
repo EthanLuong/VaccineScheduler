@@ -5,7 +5,7 @@
 <?php
     $dbhost = "localhost";
     $dbuser = "root";
-    $dbpwd = "root";
+    $dbpwd = "MySQLServer";
     $dbname = "Company";
 
     // Step 1: connect to DB

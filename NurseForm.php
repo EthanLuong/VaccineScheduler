@@ -107,7 +107,7 @@
             <option value="O">Others</option>
         </select><br>
     Address: <input type="text" name="address"> <br>
-    </select><br>
+    <br>
 
 <h2>Sign Up</h2>
 <p>Please fill this form to create an account.</p>

@@ -1,7 +1,7 @@
 <html>
 <body>
 <!-- COVID Vaccine Patient Form -->
-<h1>Add a new Employee</h1>
+<h1>Register New Account</h1>
 <?php
     $dbhost = "localhost";
     $dbuser = "root";
@@ -113,7 +113,7 @@
             <option value="AA">African-American</option>
             <option value="NA">Native-American</option>
             <option value="PI">Pacific Islander</option>
-            <option value="W">White</option>
+            <option value="W">Caucasian</option>
         </select><br>
     Occupation: <input type="text" name="occupation"> <br>
     Address: <input type="text" name="address"> <br>

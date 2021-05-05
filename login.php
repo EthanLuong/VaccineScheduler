@@ -71,7 +71,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           $access = "admin";
         }
         if(empty($login_err)){
-          echo "here";
           $row = $result->fetch_assoc();
           $hashed = $row['password'];
           echo $hashed;
@@ -79,10 +78,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(password_verify($password, $hashed)){
               $_SESSION["loggedin"] = true;
               $_SESSION["username"] = $username;
-              if($access = "admin") $_SESSION["access"] = 3;
-              elseif ($access = "nurse") $_SESSION["access"] = 2;
-              elseif ($access = "patient") $_SESSION["access"] = 1;
-              header("location: welcome.php");
+
+              if($access == "admin") $_SESSION["access"] = 3;
+              elseif ($access == "nurse") $_SESSION["access"] = 2;
+              elseif ($access == "patient") $_SESSION["access"] = 1;
+              switch($_SESSION["access"]){
+                case 3:
+                header("location: admin.php");
+                break;
+                case 2:
+                header("location: nurse.php");
+                break;
+                case 1:
+                header("location: patient.php");
+                break;
+                default:
+                header("location: welcome.php");
+                break;
+
+              }
               exit;
         } else {
           $login_err = "Invalid password.";
@@ -107,7 +121,7 @@ $conn->close();
 
         <?php
         if(!empty($login_err)){
-            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+            echo '<div>' . $login_err . '</div>';
         }
         ?>
 
@@ -125,8 +139,10 @@ $conn->close();
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Don't have an account? <a href="PatientForm.php">Sign up now</a>.</p>
         </form>
     </div>
+    <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+
 </body>
 </html>
