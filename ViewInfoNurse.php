@@ -2,7 +2,7 @@
 
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 2){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
 $dbhost = "localhost";
@@ -27,7 +27,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $myQ .= " ADDRESS = '".$_POST['address']."'";
   }
   $myQ .= " WHERE username = '".$_SESSION['username']."'";
-  echo $myQ;
   $conn->query($myQ);
 }
 $myQ = "SELECT * FROM NURSE WHERE username = ";
@@ -55,7 +54,7 @@ if($result){
     $nurseInfo .= "Female";
   }
   $nurseInfo .= "</span>";
-  echo $myQ;
+  ;
 }
 else{
   $nurseInfo = "error";
@@ -66,6 +65,14 @@ else{
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style type="text/css">
+    #navlist li
+      {
+      display: inline;
+      list-style-type: none;
+      padding-right: 20px;
+      }
+    </style>
     <title>Login</title>
 </head>
 
@@ -82,6 +89,13 @@ else{
       <input type="submit" name="submit" value="Update">
       <br>
     </form>
+
+    <div id="navcontainer">
+  	<ul id="navlist">
+  		<li><a href="nurse.php">Home</a></li>
+  		<li><a href="logout.php">Sign Out of Your Account</a></li>
+  	</ul>
+    </div>
 </body>
 
 </html>

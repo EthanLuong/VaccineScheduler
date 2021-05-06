@@ -2,7 +2,7 @@
 // Include config file
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
     $dbhost = "localhost";
@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <span class="invalid-feedback"><?php echo $success; ?></span>
             </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p>Already have an account? <a href="index.php">Login here</a>.</p>
         </form>
 </body>
 </html>

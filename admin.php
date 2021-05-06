@@ -2,7 +2,7 @@
 
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
  ?>
@@ -18,10 +18,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
   <h2>
     ADMIN WELCOME PAGE
   </h2>
-  <a href="NurseForm.php">Add Nurse</a>
-  <a href="NurseUpdate.php">Nurses</a>
-  <a href="adminpatient.php">View Patient Info</a>
-  <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+  <ul>
+    <li><a href="NurseForm.php">Add Nurse</a></li>
+    <li><a href="NurseUpdate.php">Update Nurse Info</a></li>
+    <li><a href="adminpatient.php">View Patient Info</a></li>
+    <li><a href="vaccine.php">Update Vaccine Info</a></li>
+    <li><a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></li>
+
+  </ul>
+
 </body>
 
 </html>

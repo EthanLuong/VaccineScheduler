@@ -2,7 +2,7 @@
 
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 1){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
 $dbhost = "localhost";
@@ -30,14 +30,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $myQ .= " OCCUPATION = '".$_POST['occupation']."'";
   }
   $myQ .= " WHERE username = '".$_SESSION['username']."'";
-  echo $myQ;
+  ;
   $conn->query($myQ);
 
 
 }
 $myQ = "SELECT * FROM PATIENT WHERE username = ";
 $myQ .= "'".$_SESSION['username']."'";
-echo $_SESSION["access"];
 $result = $conn->query($myQ);
 if($result){
   $row = $result->fetch_assoc();
@@ -60,7 +59,7 @@ if($result){
     $patientInfo .= "Female";
   }
   $patientInfo .= "</span>";
-  echo $myQ;
+  ;
 }
 $patientInfo .= "<br><b>Occupation: </b>";
 $patientInfo .= $row['Occupation'];

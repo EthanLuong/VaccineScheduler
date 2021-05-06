@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
 $dbhost = "localhost";

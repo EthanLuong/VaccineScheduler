@@ -2,7 +2,7 @@
 
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
 $dbhost = "localhost";
@@ -24,14 +24,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
       $myQ = "INSERT INTO VACCINE(NAME, COMPANY, AVAILIBILITY, ONHOLD) VALUES ";
       $myQ .= "('".$_POST['name']."','".$_POST['company']."',".$_POST['doses'].",0)";
 
-      echo $myQ;
       $conn->query($myQ);
       break;
       case "View":
       if(isset($_POST['vaccinename'])){
         $myQ = "SELECT * FROM VACCINE WHERE NAME = '";
         $myQ .= $_POST['vaccinename']."'";
-        echo $myQ;
         $result = $conn->query($myQ);
         $row = $result->fetch_assoc();
         $vaccineInfo = "<span><b>Name: </b>";

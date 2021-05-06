@@ -80,7 +80,7 @@
 
 
             $myQ .= $password."')";
-            echo $myQ;
+            ;
             $result = $conn->query($myQ);
             if($result){
               $success = "Success!";
@@ -134,7 +134,7 @@
           <input type="submit" class="btn btn-primary" value="Submit">
           <span class="invalid-feedback"><?php echo $success; ?></span>
       </div>
-      <p>Already have an account? <a href="login.php">Login here</a>.</p>
+      <p>Already have an account? <a href="index.php">Login here</a>.</p>
 </form>
 
 </body>

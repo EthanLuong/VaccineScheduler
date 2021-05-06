@@ -2,7 +2,7 @@
 
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 2){
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
  ?>
@@ -18,8 +18,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 2){
   <h2>
     NURSE WELCOME PAGE
   </h2>
-  <a href="ViewInfoNurse.php">View Info</a>
-  <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+  <li><a href="ViewInfoNurse.php">View Info</a></li>
+  <li><a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a></li>
 </body>
 
 </html>
