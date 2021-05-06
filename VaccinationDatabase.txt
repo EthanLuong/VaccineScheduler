@@ -39,10 +39,11 @@ CREATE TABLE `patient` (
 
 CREATE TABLE `timeslot` (
   `Start` date NOT NULL,
-  `Date` date NOT NULL,
   `TimeID` int NOT NULL AUTO_INCREMENT,
+  `NumNurses` int NOT NULL,
+  `NumPatients` int NOT NULL,
   PRIMARY KEY (`TimeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `vaccine` (
   `Name` varchar(50) NOT NULL,
