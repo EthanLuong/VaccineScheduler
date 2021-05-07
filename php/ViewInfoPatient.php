@@ -83,7 +83,23 @@ switch($row['Race']){
   $patientInfo .= "Caucasian";
   break;
 }
-$patientInfo .= "</span>";
+$patientInfo .= "</span></br>";
+$myQ = "SELECT nurse.FName, nurse.MI, nurse.LName, Date, Start, Name, Dose FROM vaccinehistory, nurse, timeslot WHERE vaccinehistory.TimeID = timeslot.TimeID AND vaccinehistory.EmployeeID = nurse.EmployeeID AND UserID = ";
+$myQ .= $_SESSION['id'];
+$result = $conn->query($myQ);
+if($result->num_rows > 0){
+  $patientInfo .= "<h2>History</h2><table> <tr> <th>Nurse</th><th>Date</th><th>Time</th><th>Vaccine</th><th>Dose</th></tr>";
+  while($row = $result->fetch_assoc()){
+    $patientInfo.= "<tr>";
+    $patientInfo.= "<th>".$row['FName']." ".$row['MI']." ".$row['LName']."</th>";
+    $patientInfo.= "<th>".$row['Date']."</th>";
+    $patientInfo.= "<th>".$row['Start']."</th>";
+    $patientInfo.= "<th>".$row['Name']."</th>";
+    $patientInfo.= "<th>".$row['Dose']."</th>";
+    $patientInfo.= "</tr>";
+  }
+  $patientInfo .= "</table></br>";
+}
 
 
 
@@ -114,7 +130,7 @@ $patientInfo .= "</span>";
   echo "</br>";
   $myQ = "SELECT * FROM timeslot, scheduledvaccine WHERE timeslot.TimeID = scheduledvaccine.TimeID AND UserID = ";
   $myQ .= $_SESSION['id'];
-  echo $myQ;
+
   $result = $conn->query($myQ);
   if($result->num_rows > 0){
     echo "<table> <tr> <th>Date</th><th>Time</th><th>Vaccine</th><th>Dose</th></tr>";
@@ -128,7 +144,10 @@ $patientInfo .= "</span>";
       echo "</tr>";
       $row = $result->fetch_assoc();
     }
-    echo "</table>";
+    echo "</table></br>";
+
+
+
     $conn->close();
   }
    ?>
@@ -147,7 +166,6 @@ $patientInfo .= "</span>";
 		<li><a href="logout.php">Sign Out of Your Account</a></li>
 	</ul>
   </div>
-
 
 </body>
 </body>

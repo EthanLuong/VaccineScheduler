@@ -21,6 +21,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 1){
   <div id="footer">
 	<ul>
 		<li><a href="ViewInfoPatient.php">View Info</a></li>
+    <li><a href="SchedulePatient.php">Schedule an appointment</a></li>
 		<li><a href="logout.php">Sign Out of Your Account</a></li>
 	</ul>
   </div>

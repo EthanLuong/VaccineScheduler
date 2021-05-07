@@ -31,7 +31,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 $myQ = "SELECT * FROM NURSE WHERE username = ";
 $myQ .= "'".$_SESSION['username']."'";
-echo $_SESSION["access"];
 $result = $conn->query($myQ);
 if($result){
   $row = $result->fetch_assoc();
@@ -66,14 +65,6 @@ else{
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <style type="text/css">
-    #navlist li
-      {
-      display: inline;
-      list-style-type: none;
-      padding-right: 20px;
-      }
-    </style>
     <title>Login</title>
 </head>
 
@@ -112,12 +103,9 @@ else{
       <br>
     </form>
 
-    <div id="navcontainer">
-  	<ul id="navlist">
+
   		<li><a href="nurse.php">Home</a></li>
-  		<li><a href="logout.php">Sign Out of Your Account</a></li>
-  	</ul>
-    </div>
+
 </body>
 
 </html>

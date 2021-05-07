@@ -129,7 +129,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
       Doses: <input type="text" name="setdoses"> <br>
       <input type="submit" name = "submit" value="Set">
     </form>
-  <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+    <li><a href="index.php">Home</a></li>
 </body>
 
 </html>

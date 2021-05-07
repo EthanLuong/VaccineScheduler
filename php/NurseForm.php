@@ -125,7 +125,7 @@
         <input type="submit" class="btn btn-primary" value="Submit">
         <span class="invalid-feedback"><?php echo $success; ?></span>
     </div>
-    <p>Already have an account? <a href="index.php">Login here</a>.</p>
+    <li><a href="index.php">Home</a></li>
 </form>
 </body>
 </html>

@@ -20,7 +20,7 @@ $patientInfo = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
   $myQ = "SELECT * FROM PATIENT WHERE UserID = ";
   $myQ .= $_POST['id'];
-  echo $myQ;
+
   $result = $conn->query($myQ);
   $row = $result->fetch_assoc();
   $patientInfo = "<span><b>Name: </b>";
@@ -64,7 +64,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $patientInfo .= "Caucasian";
     break;
   }
-  $patientInfo .= "</span>";
+  $patientInfo .= "</span></br>";
+  $myQ = "SELECT nurse.FName, nurse.MI, nurse.LName, Date, Start, Name, Dose FROM vaccinehistory, nurse, timeslot WHERE vaccinehistory.TimeID = timeslot.TimeID AND vaccinehistory.EmployeeID = nurse.EmployeeID AND UserID = ";
+  $myQ .= $_POST['id'];
+  $result = $conn->query($myQ);
+  if($result->num_rows > 0){
+    $patientInfo .= "<h2>History</h2><table> <tr> <th>Nurse</th><th>Date</th><th>Time</th><th>Vaccine</th><th>Dose</th></tr>";
+    while($row = $result->fetch_assoc()){
+      $patientInfo.= "<tr>";
+      $patientInfo.= "<th>".$row['FName']." ".$row['MI']." ".$row['LName']."</th>";
+      $patientInfo.= "<th>".$row['Date']."</th>";
+      $patientInfo.= "<th>".$row['Start']."</th>";
+      $patientInfo.= "<th>".$row['Name']."</th>";
+      $patientInfo.= "<th>".$row['Dose']."</th>";
+      $patientInfo.= "</tr>";
+    }
+    $patientInfo .= "</table></br>";
+  }
+
   $myQ = "SELECT * FROM timeslot, scheduledvaccine WHERE timeslot.TimeID = scheduledvaccine.TimeID AND UserID = ";
   $myQ .= $_POST['id'];
   $result = $conn->query($myQ);
@@ -114,13 +131,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
    <?php
    if($table != ""){
-     echo "<h2>Scheduled Appointments</h2>"; 
+     echo "<h2>Scheduled Appointments</h2>";
    }
 
    echo $table;
 
    ?>
-
+<li><a href="index.php">Home</a></li>
  </body>
 
  </html>
