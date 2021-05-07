@@ -109,6 +109,29 @@ $patientInfo .= "</span>";
     Info
   </h2>
   <?php echo $patientInfo ?>
+  <h2>Scheduled Times</h2>
+  <?php
+  echo "</br>";
+  $myQ = "SELECT * FROM timeslot, scheduledvaccine WHERE timeslot.TimeID = scheduledvaccine.TimeID AND UserID = ";
+  $myQ .= $_SESSION['id'];
+  echo $myQ;
+  $result = $conn->query($myQ);
+  if($result->num_rows > 0){
+    echo "<table> <tr> <th>Date</th><th>Time</th><th>Vaccine</th><th>Dose</th></tr>";
+    $row = $result->fetch_assoc();
+    while($row != NULL){
+      echo "<tr>";
+      echo "<th>".$row['Date']."</th>";
+      echo "<th>".$row['Start']."</th>";
+      echo "<th>".$row['Name']."</th>";
+      echo "<th>".$row['Dose']."</th>";
+      echo "</tr>";
+      $row = $result->fetch_assoc();
+    }
+    echo "</table>";
+    $conn->close();
+  }
+   ?>
   <h2>Update Your Info</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
   Phone Number: <input type="text" name="phone"> <br>

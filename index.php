@@ -51,6 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Validate credentials
+    $id = 0;
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
         $sql = "SELECT username, password FROM admin WHERE username = '";
@@ -58,12 +59,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo $sql;
         $result = $conn->query($sql);
         if($result->num_rows == 0){
-          $sql = "SELECT username, password FROM nurse WHERE username = '";
+          $sql = "SELECT username, password, EmployeeID FROM nurse WHERE username = '";
           $sql .= $username."'";
           echo $sql;
           $result = $conn->query($sql);
           if($result->num_rows == 0){
-            $sql = "SELECT username, password FROM patient WHERE username = '";
+            $sql = "SELECT username, password, UserID FROM patient WHERE username = '";
             $sql .= $username."'";
             echo $sql;
             $result = $conn->query($sql);
@@ -82,6 +83,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(empty($login_err)){
           $row = $result->fetch_assoc();
           $hashed = $row['password'];
+          if(isset($row['EmployeeID'])){
+            $id = $row['EmployeeID'];
+          } elseif(isset($row['UserID'])){
+            $id = $row['UserID'];
+          }
           echo $hashed;
         }
         if(password_verify($password, $hashed)){
@@ -96,9 +102,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("location: admin.php");
                 break;
                 case 2:
+                $_SESSION["id"] = $id;
                 header("location: nurse.php");
                 break;
                 case 1:
+                $_SESSION["id"] = $id;
                 header("location: patient.php");
                 break;
                 default:

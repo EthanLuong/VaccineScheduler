@@ -59,6 +59,7 @@ if($result){
 else{
   $nurseInfo = "error";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +81,28 @@ else{
   <h2>
     Info
   </h2>
-  <?php echo $nurseInfo ?>
+  <?php echo $nurseInfo;
+  echo "</br>";
+  ?>
+  <h2>Scheduled Times</h2>
+  <?php
+  $myQ = "SELECT * FROM timeslot, scheduledwork WHERE timeslot.TimeID = scheduledwork.TimeID AND EmployeeID = ";
+  $myQ .= $_SESSION['id'];
+  $result = $conn->query($myQ);
+  if($result->num_rows > 0){
+    echo "<table> <tr> <th>Date</th><th>Time</th></tr>";
+    $row = $result->fetch_assoc();
+    while($row != NULL){
+      echo "<tr>";
+      echo "<th>".$row['Date']."</th>";
+      echo "<th>".$row['Start']."</th>";
+      echo "</tr>";
+      $row = $result->fetch_assoc();
+    }
+    echo "</table>";
+    $conn->close();
+  }
+   ?>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <h2>Update Your Info</h2>
     <br>

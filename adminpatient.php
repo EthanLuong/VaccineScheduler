@@ -15,10 +15,12 @@ if($conn->connect_error)
     echo "Error: could not connect to the DB";
     exit;
 }
+$table = "";
 $patientInfo = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-  $myQ = "SELECT * FROM PATIENT WHERE SSN = ";
-  $myQ .= $_POST['ssn'];
+  $myQ = "SELECT * FROM PATIENT WHERE UserID = ";
+  $myQ .= $_POST['id'];
+  echo $myQ;
   $result = $conn->query($myQ);
   $row = $result->fetch_assoc();
   $patientInfo = "<span><b>Name: </b>";
@@ -63,6 +65,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     break;
   }
   $patientInfo .= "</span>";
+  $myQ = "SELECT * FROM timeslot, scheduledvaccine WHERE timeslot.TimeID = scheduledvaccine.TimeID AND UserID = ";
+  $myQ .= $_POST['id'];
+  $result = $conn->query($myQ);
+  if($result->num_rows > 0){
+    $table = "<table> <tr> <th>Date</th><th>Time</th><th>Vaccine</th><th>Dose</th></tr>";
+    $row = $result->fetch_assoc();
+    while($row != NULL){
+      $table .= "<tr>";
+      $table .= "<th>".$row['Date']."</th>";
+      $table .=  "<th>".$row['Start']."</th>";
+      $table .= "<th>".$row['Name']."</th>";
+      $table .=  "<th>".$row['Dose']."</th>";
+      $table .=  "</tr>";
+      $row = $result->fetch_assoc();
+    }
+    $table .=  "</table>";
+  }
 
 }
  ?>
@@ -77,19 +96,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  <body>
    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
      <h2>View Patient Info</h2>
-     <select name="ssn">
+     <select name="id">
          <?php
-             $myQ="SELECT FNAME, MI, LNAME, SSN FROM PATIENT";
+             $myQ="SELECT FNAME, MI, LNAME, UserID FROM PATIENT";
              $results = $conn->query($myQ);
              while($obj = $results->fetch_object())
-                 echo "<option value='".$obj->SSN."'>". $obj->FNAME ." ".$obj->MI." ".$obj->LNAME ."</option>";
+                 echo "<option value='".$obj->UserID."'>". $obj->FNAME ." ".$obj->MI." ".$obj->LNAME ."</option>";
 
              $conn->close();
          ?>
          <input type="submit" name = "submit" value="View">
      </select>
    </form>
-   <?php echo $patientInfo?>
+   <?php echo $patientInfo;
+   echo "</br>";
+   ?>
+
+   <?php
+   if($table != ""){
+     echo "<h2>Scheduled Appointments</h2>"; 
+   }
+
+   echo $table;
+
+   ?>
 
  </body>
 

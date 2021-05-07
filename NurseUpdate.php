@@ -17,7 +17,7 @@ if($conn->connect_error)
     exit;
 }
 $nurseInfo = "";
-
+$table = "";
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
   switch($_POST['submit']){
@@ -46,6 +46,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $nurseInfo .= "Female";
       }
       $nurseInfo .= "</span>";
+      $myQ = "SELECT * FROM timeslot, scheduledwork WHERE timeslot.TimeID = scheduledwork.TimeID AND EmployeeID = ";
+      $myQ .= $_POST['empID'];
+      $result = $conn->query($myQ);
+      if($result->num_rows > 0){
+        $table = "<table> <tr> <th>Date</th><th>Time</th></tr>";
+        $row = $result->fetch_assoc();
+        while($row != NULL){
+          $table .= "<tr>";
+          $table .= "<th>".$row['Date']."</th>";
+          $table .=  "<th>".$row['Start']."</th>";
+          $table .=  "</tr>";
+          $row = $result->fetch_assoc();
+        }
+        $table .=  "</table>";
+      }
 
     }
 
@@ -89,7 +104,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $conn->query($myQ);
     break;
   }
+
 }
+
+
+
  ?>
 
 <!DOCTYPE html>
@@ -114,7 +133,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </select>
     <input type="submit" name = "submit" value="view">
   </form>
-  <?php echo $nurseInfo?>
+  <?php echo $nurseInfo;
+  echo "</br>";
+  echo $table;
+
+  ?>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <h2>Delete Nurse</h2>
     <select name="delID">
