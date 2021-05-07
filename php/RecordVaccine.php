@@ -2,7 +2,7 @@
 <?php
 
 session_start();
-if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] < 2){
+if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] != 2){
     header("location: index.php");
     exit;
 }

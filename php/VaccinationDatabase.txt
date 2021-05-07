@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 07, 2021 at 10:29 AM
+-- Generation Time: May 07, 2021 at 01:00 AM
 -- Server version: 8.0.23
 -- PHP Version: 8.0.3
 
@@ -37,7 +37,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`username`, `password`) VALUES
-('root', '$2y$10$2QevVA0k4n5Ryn/n9nOKa.pS7mD/gczJYy6MhgxhmZCTdQLyeAGg.'),
+('root', '$2y$10$2QevVA0k4n5Ryn/n9nOKa.pS7mD/gczJYy6MhgxhmZCTdQLyeAGg.');
 
 -- --------------------------------------------------------
 
@@ -87,6 +87,7 @@ CREATE TABLE `patient` (
 --
 -- Dumping data for table `patient`
 --
+
 -- --------------------------------------------------------
 
 --
@@ -119,6 +120,7 @@ CREATE TABLE `scheduledwork` (
 -- Dumping data for table `scheduledwork`
 --
 
+
 -- --------------------------------------------------------
 
 --
@@ -128,8 +130,8 @@ CREATE TABLE `scheduledwork` (
 CREATE TABLE `timeslot` (
   `Start` time NOT NULL,
   `TimeID` int NOT NULL,
-  `NumNurses` int NOT NULL DEFAULT '0',
-  `NumPatients` int NOT NULL DEFAULT '0',
+  `NumNurses` int NOT NULL,
+  `NumPatients` int NOT NULL,
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -137,6 +139,9 @@ CREATE TABLE `timeslot` (
 -- Dumping data for table `timeslot`
 --
 
+INSERT INTO `timeslot` (`Start`, `TimeID`, `NumNurses`, `NumPatients`, `Date`) VALUES
+('11:00:00', 1, 0, 0, '2021-05-07'),
+('12:00:00', 2, 0, 0, '2021-05-07');
 
 -- --------------------------------------------------------
 
@@ -155,23 +160,8 @@ CREATE TABLE `vaccine` (
 -- Dumping data for table `vaccine`
 --
 
--- --------------------------------------------------------
-
---
--- Table structure for table `vaccinehistory`
---
-
-CREATE TABLE `vaccinehistory` (
-  `EmployeeID` int NOT NULL,
-  `TimeID` int NOT NULL,
-  `Name` varchar(50) NOT NULL,
-  `Dose` enum('1','2') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `UserID` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `vaccinehistory`
---
+INSERT INTO `vaccine` (`Name`, `Company`, `Availibility`, `OnHold`) VALUES
+('Pfizer', 'Pfizer', 20, 0);
 
 --
 -- Indexes for dumped tables
@@ -225,15 +215,6 @@ ALTER TABLE `vaccine`
   ADD PRIMARY KEY (`Name`);
 
 --
--- Indexes for table `vaccinehistory`
---
-ALTER TABLE `vaccinehistory`
-  ADD PRIMARY KEY (`EmployeeID`,`TimeID`,`Name`,`UserID`),
-  ADD KEY `fk_tim` (`TimeID`),
-  ADD KEY `fk_nam` (`Name`),
-  ADD KEY `fk_usid` (`UserID`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -241,7 +222,7 @@ ALTER TABLE `vaccinehistory`
 -- AUTO_INCREMENT for table `nurse`
 --
 ALTER TABLE `nurse`
-  MODIFY `EmployeeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `EmployeeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `patient`
@@ -253,7 +234,7 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `timeslot`
 --
 ALTER TABLE `timeslot`
-  MODIFY `TimeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `TimeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -273,15 +254,6 @@ ALTER TABLE `scheduledvaccine`
 ALTER TABLE `scheduledwork`
   ADD CONSTRAINT `fk_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `nurse` (`EmployeeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_TimeWork` FOREIGN KEY (`TimeID`) REFERENCES `timeslot` (`TimeID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `vaccinehistory`
---
-ALTER TABLE `vaccinehistory`
-  ADD CONSTRAINT `fk_emp` FOREIGN KEY (`EmployeeID`) REFERENCES `nurse` (`EmployeeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_nam` FOREIGN KEY (`Name`) REFERENCES `vaccine` (`Name`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_tim` FOREIGN KEY (`TimeID`) REFERENCES `timeslot` (`TimeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_usid` FOREIGN KEY (`UserID`) REFERENCES `patient` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

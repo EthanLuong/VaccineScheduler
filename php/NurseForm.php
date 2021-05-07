@@ -3,6 +3,11 @@
 <!-- COVID Vaccine Patient Form -->
 <h1>Add a new Nurse</h1>
 <?php
+session_start();
+if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
+    header("location: index.php");
+    exit;
+}
     $dbhost = "localhost";
     $dbuser = "root";
     $dbpwd = "MySQLServer";
