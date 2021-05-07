@@ -15,9 +15,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 1){
 </head>
 
 <body>
-  <h2>
-    Patient WELCOME PAGE
-  </h2>
+  <h1 style="color:red;">Patient's <h1 style ="color:blue;" >WELCOME PAGE</h1>
   <div id="footer">
 	<ul>
 		<li><a href="ViewInfoPatient.php">View Info</a></li>
