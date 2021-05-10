@@ -24,9 +24,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $myQ .= " PHONE = '".$_POST['phone']."'";
   }
   if(isset($_POST['address']) && $_POST['address'] != ""){
-    $myQ .= " ADDRESS = '".$_POST['address']."'";
+    $myQ .= ", ADDRESS = '".$_POST['address']."'";
   }
   $myQ .= " WHERE username = '".$_SESSION['username']."'";
+  echo $myQ;
   $conn->query($myQ);
 }
 $myQ = "SELECT * FROM NURSE WHERE username = ";

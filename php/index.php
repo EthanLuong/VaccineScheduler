@@ -56,17 +56,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare a select statement
         $sql = "SELECT username, password FROM admin WHERE username = '";
         $sql .= $username."'";
-        echo $sql;
         $result = $conn->query($sql);
         if($result->num_rows == 0){
           $sql = "SELECT username, password, EmployeeID FROM nurse WHERE username = '";
           $sql .= $username."'";
-          echo $sql;
+
           $result = $conn->query($sql);
           if($result->num_rows == 0){
             $sql = "SELECT username, password, UserID FROM patient WHERE username = '";
             $sql .= $username."'";
-            echo $sql;
+
             $result = $conn->query($sql);
             if($result->num_rows == 0){
               echo "here </br>";

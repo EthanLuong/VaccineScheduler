@@ -40,7 +40,7 @@ $result = $conn->query($myQ);
     Add Time Slot
   </h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-      Date (YYYY-DD-MM): <input type="text" name="date"><br>
+      Date (YYYY-MM-DD): <input type="text" name="date"><br>
       Time (HH:MM:SS): <input type="text" name="time">
 <input type="submit" class="btn btn-primary" value="Submit">
     </form>

@@ -35,7 +35,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["access"] !== 3){
           $sql .= " UNION SELECT username FROM patient WHERE username = ";
           $sql .= "'".trim($_POST["username"])."'";
 
-          echo $sql;
           $result = $conn->query($sql);
           if($result){
             if($result->num_rows > 0){
