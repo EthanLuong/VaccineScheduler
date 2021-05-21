@@ -1,0 +1,52 @@
+body{ font: 14px sans-serif; }
+.wrapper{ padding: 20px; }
+
+.form-group{
+  margin-bottom: 5px;
+}
+
+.button{
+  border-radius: 4px;
+  border-style: none;
+  padding: 8px;
+  color: white;
+}
+
+#submit{
+  background-color: #0066ff;
+}
+
+.navmargin{
+  margin-top:50px;
+}
+ul {
+  position:fixed;
+  top: 0;
+  left:0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  width: 100%;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
